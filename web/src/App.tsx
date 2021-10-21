@@ -1,14 +1,14 @@
-import { useState } from 'react'
-import './App.css'
+import style from './App.module.scss'
+import { LoginBox } from './components/LoginBox'
+import { MessageList } from './components/MessageList'
 
-function App() {
-  const [count, setCount] = useState(0)
+export function App() {
 
   return (
-    <div className="App">
-      Hello World!
-    </div>
+    <main className="contentWrapper">
+      <MessageList />
+      <LoginBox />
+    </main>
   )
 }
 
-export default App
