@@ -5,7 +5,7 @@ import { MessageList } from './components/MessageList'
 export function App() {
 
   return (
-    <main className="contentWrapper">
+    <main className={style.contentWrapper}>
       <MessageList />
       <LoginBox />
     </main>
