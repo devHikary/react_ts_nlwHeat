@@ -39,13 +39,12 @@ export function AuthProvider(props: AuthProvider){
     const response = await api.post<AuthResponse>('authenticate',{
       code: githubCode,
     })
-    console.log(response);
+
     const { token, user } = response.data
 
     localStorage.setItem('@dowhile:token', token)
 
     setUser(user)
-    console.log(user)
   }
 
   useEffect(() =>{
@@ -57,10 +56,21 @@ export function AuthProvider(props: AuthProvider){
 
       window.history.pushState({}, '', urlWithoutCode);
 
-      console.log({ urlWithoutCode, githubCode})
       signIn(githubCode);
     }
   },[])
+
+  useEffect(() => {
+    const token = localStorage.getItem('@dowhile:token')
+
+    if (token) {
+      api.defaults.headers.common.authorization = `Bearer ${token}`;
+
+      api.get<User>('profile').then(response => {
+        setUser(response.data)
+      })
+    }
+  }, [])
 
   return(
     <AuthContext.Provider value={{signInUrl, user}}>
